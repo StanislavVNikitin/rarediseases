@@ -1,0 +1,14 @@
+        .pagination .page-item.active .page-link {
+            background-color: rgb(108,117,125);
+             border-color: rgb(108,117,125);
+        }
+
+        div.dataTables_wrapper div.dataTables_paginate ul.pagination .page-item.active .page-link:focus {
+            background-color: rgb(108,117,125);
+            border-color: rgb(108,117,125);
+        }
+
+        .pagination .page-item.active .page-link:hover {
+            background-color: rgb(108,117,125);
+            border-color: rgb(108,117,125);
+        }

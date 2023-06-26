@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block description %} {{ object.title }} - {{ object.description|truncatewords:10  }} {% endblock %}
+{% block title %} {{ object.title }} :: {{ block.super}} {% endblock %}
+
+{% block content %}
+
+<div class="card my-2">
+    <h5 class="card-header">{{ object.title }} {% if object.not_empty_codemkb %} <small>({{ object.codemkb }})</small> {% endif %} </h5>
+    <div class="card-body">
+        <p class="card-text">{{ object.description }}</p>
+        {% if object.communities.all.count > 0 %}
+        <h5 class="text-secondary">Сообщества:</h5>
+        <div class="container px-4">
+            <div class="row gx-5">
+                {% for community in object.communities.all %}
+                <div class="card border-secondary col-12 {% if object.communities.all.count > 1 %} col-lg-6 {% endif %}">
+                        <div class="card-body text-secondary">
+                            <h5 class="card-title">{{ community }}</h5>
+                            <p class="card-text text-justify">{{ community.description }}</p>
+                        </div>
+                        <div class="card-footer bg-transparent border-secondary">
+                            <p>Контакты:
+                                {% for contact in community.contact.all %}
+                                    <a class="text-secondary text-decoration-none " href="{{ contact.get_contact_url }}"><i class="{{ contact.get_type_icone }}"></i></a>
+                                {% endfor %}
+                            </p>
+                        </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        </p>
+        <small>Тэги:
+            {% for tag in object.tags.all %}
+            <a class="text-decoration-none text-black" href="{{tag.get_absolute_url}}"><i>{{ tag }}</i></a>
+            {% endfor %}
+        </small>
+    </div>
+</div>
+
+
+{% endblock %}

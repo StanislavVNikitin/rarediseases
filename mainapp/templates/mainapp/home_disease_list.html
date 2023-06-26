@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block description %} {{ title }} {% endblock %}
+{% block title %} {{ title }} :: {{ block.super}} {% endblock %}
+
+{% block content %}
+
+{% if object_list.count > 0 %}
+{% for item in object_list %}
+<div class="card my-2">
+    <a class="text-decoration-none text-black" href="{{item.get_absolute_url}}"><h5 class="card-header">{{ item.title }} {% if item.not_empty_codemkb %} <small>({{ item.codemkb }})</small>{% endif %}</h5> </a>
+    <div class="card-body">
+        <div class="card-body text-secondary">
+        <p class="text-justify">{{ item.description }}</p>
+        {% if item.communities.all.count > 0 %}
+        <h5 class="text-secondary">Сообщества:</h5>
+        <div class="container px-4">
+            <div class="row gx-5">
+                {% for community in item.communities.all %}
+                <div class="card border-secondary col-12 {% if item.communities.all.count > 1 %} col-lg-6 {% endif %}">
+                        <div class="card-body text-secondary">
+                            <h5 class="card-title">{{ community }}</h5>
+                            <p class="card-text text-justify">{{ community.description }}</p>
+                        </div>
+                        <div class="card-footer bg-transparent border-secondary">
+                            <p>Контакты:
+                                {% for contact in community.contact.all %}
+                                    <a class="text-secondary text-decoration-none" href="{{ contact.get_contact_url }}"><i class="{{ contact.get_type_icone }}"></i></a>
+                                {% endfor %}
+                            </p>
+                        </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endfor %}
+{% endif %}
+
+{% endblock %}
