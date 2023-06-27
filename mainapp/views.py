@@ -71,7 +71,7 @@ class ContactsPageView(TemplateView):
         form = forms.MailFeedbackForm(self.request.POST)
         if form.is_valid():
             human = True
-            mainapp_tasks.send_feedback_mail.delay({"message": f'Subject: {self.request.POST.get("title")}\n Messages: {self.request.POST.get("message")}', })
+            mainapp_tasks.send_feedback_mail.delay({"message": f'Subject: {self.request.POST.get("title")}\nMessages: {self.request.POST.get("message")}', })
             messages.success(self.request, 'Письмо отправлено!')
         else:
             messages.error(self.request, 'Ошибка валидации')
